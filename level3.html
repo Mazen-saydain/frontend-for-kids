@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Front-End for kids — Level 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg:        #F4F7FF;
+  --surface:   #FFFFFF;
+  --card:      #FFFFFF;
+  --border:    #E2E8F4;
+  --border2:   #D0DAF0;
+  --green:     #10B981;
+  --green-lt:  #ECFDF5;
+  --green-mid: #D1FAE5;
+  --blue:      #3B82F6;
+  --blue-lt:   #EFF6FF;
+  --indigo:    #6366F1;
+  --indigo-lt: #EEF2FF;
+  --amber:     #F59E0B;
+  --amber-lt:  #FFFBEB;
+  --rose:      #F43F5E;
+  --rose-lt:   #FFF1F2;
+  --purple:    #8B5CF6;
+  --purple-lt: #F5F3FF;
+  --text:      #0F172A;
+  --text2:     #334155;
+  --muted:     #64748B;
+  --soft:      #94A3B8;
+  --mono:      'JetBrains Mono', monospace;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 48px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 8px rgba(15,23,42,0.06);
+}
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text);
+  text-decoration: none;
+}
+.logo-icon { font-size: 22px; }
+.logo span { color: var(--green); }
+.level-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: var(--green-lt);
+  border: 1.5px solid var(--green-mid);
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green);
+}
+.level-badge .dot { width:8px; height:8px; border-radius:50%; background:var(--green); }
+
+.level-nav {
+  display: flex;
+  gap: 8px;
+}
+.level-nav a {
+  padding: 7px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1.5px solid transparent;
+  transition: all 0.2s;
+  color: #64748B;
+}
+.level-nav a:hover { background: #F8FAFC; color: #334155; }
+.level-nav a.active { background: var(--green-lt); border-color: var(--green); color: #065F46; }
+.level-nav a.l2 { }
+.level-nav a.l2:hover { background: #FFFBEB; }
+.level-nav a.l3 { }
+.level-nav a.l3:hover { background: #F5F3FF; }
+
+.hero {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 56px 48px 48px;
+}
+.hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 48px;
+  align-items: center;
+}
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green);
+  font-family: var(--mono);
+  margin-bottom: 14px;
+}
+.hero h1 {
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  color: var(--text);
+  letter-spacing: -0.5px;
+}
+.hero h1 span { color: var(--green); }
+.hero-meta {
+  font-size: 15px;
+  color: var(--muted);
+  margin-bottom: 28px;
+  font-weight: 500;
+}
+.hero-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.hchip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+}
+.hchip .ci { font-size: 15px; }
+
+.goal-card {
+  background: var(--green-lt);
+  border: 1.5px solid var(--green-mid);
+  border-radius: 20px;
+  padding: 24px 28px;
+  min-width: 280px;
+  max-width: 320px;
+}
+.goal-card .gc-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green);
+  font-family: var(--mono);
+  margin-bottom: 10px;
+}
+.goal-card p {
+  font-size: 14px;
+  color: #065F46;
+  line-height: 1.65;
+  font-weight: 500;
+}
+
+.outcomes-bar {
+  background: var(--indigo-lt);
+  border-top: 1px solid #C7D2FE;
+  border-bottom: 1px solid var(--border);
+  padding: 20px 48px;
+}
+.outcomes-bar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.ob-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--indigo);
+  font-family: var(--mono);
+  margin-bottom: 12px;
+}
+.ob-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ob-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  background: var(--surface);
+  border: 1px solid #C7D2FE;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--indigo);
+}
+.ob-check { font-size: 12px; color: var(--green); }
+
+.trail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 32px 48px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  margin-bottom: 0;
+}
+.trail-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.trail-circle {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--mono);
+  border: 2px solid;
+}
+.trail-label { font-size: 10px; font-weight: 600; color: var(--muted); }
+.trail-arrow { color: var(--border2); font-size: 16px; margin-bottom: 20px; }
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 48px 80px;
+}
+
+.week-hd {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 48px 0 24px;
+}
+.week-hd:first-child { margin-top: 0; }
+.wk-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 18px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--mono);
+  white-space: nowrap;
+  border: 1.5px solid;
+}
+.wk-line { flex: 1; height: 1px; background: var(--border2); }
+.wk-subtitle { font-size: 13px; color: var(--muted); font-weight: 600; white-space: nowrap; }
+
+.sgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+  gap: 20px;
+}
+
+.scard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(15,23,42,0.05);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.scard:hover {
+  box-shadow: 0 8px 32px rgba(15,23,42,0.1);
+  transform: translateY(-2px);
+}
+.scard-accent { height: 4px; }
+.scard-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 22px 24px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.snum {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 8px;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.stitle {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+}
+.ssub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 3px;
+  font-weight: 500;
+}
+.sbody { padding: 22px 24px; }
+
+.section-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--soft);
+  font-family: var(--mono);
+  margin-bottom: 10px;
+}
+.ctags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+.ctag {
+  font-size: 12px;
+  padding: 3px 11px;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  color: var(--text2);
+  font-family: var(--mono);
+  font-weight: 600;
+}
+
+.detail-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.tbox {
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid;
+}
+.tbox .blbl {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: var(--mono);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.tbox .tname {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+.tbox ul { list-style: none; }
+.tbox ul li {
+  font-size: 12.5px;
+  color: var(--text2);
+  padding: 3px 0 3px 16px;
+  position: relative;
+  font-weight: 500;
+}
+.tbox ul li::before {
+  content: '›';
+  position: absolute;
+  left: 4px;
+  color: var(--soft);
+  font-weight: 700;
+}
+
+.hwbox {
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: var(--blue-lt);
+  border: 1px solid #BFDBFE;
+}
+.hwbox .blbl {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: var(--mono);
+  color: var(--blue);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.hwi {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--surface);
+  border-radius: 9px;
+  margin-bottom: 7px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text2);
+  border: 1px solid #DBEAFE;
+}
+.hwi .hi { flex-shrink: 0; font-size: 13px; }
+
+.sum-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.spill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  transition: background 0.15s;
+}
+.spill:hover { background: #EEF2FF; border-color: #C7D2FE; }
+.spi { font-size: 22px; flex-shrink: 0; }
+.plbl {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: var(--mono);
+  color: var(--soft);
+  display: block;
+  margin-bottom: 2px;
+  font-weight: 600;
+}
+.pval { font-size: 13px; font-weight: 700; color: var(--text); }
+
+.special {
+  border-radius: 20px;
+  padding: 28px 32px;
+  margin: 24px 0;
+  position: relative;
+  overflow: hidden;
+  border: 1.5px solid;
+}
+.comp-card {
+  background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
+  border-color: #FCD34D;
+}
+.mini-proj-card {
+  background: linear-gradient(135deg, var(--purple-lt), #F0FFFE);
+  border-color: #DDD6FE;
+}
+.level-task-card {
+  background: linear-gradient(135deg, #EFF6FF, #F0FDF4);
+  border-color: #BFDBFE;
+}
+.final-proj-card {
+  background: linear-gradient(135deg, #F0FDF4, #EFF6FF);
+  border-color: #86EFAC;
+}
+
+.sp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1.5px solid;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.special h3 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  margin-bottom: 5px;
+}
+.sp-desc {
+  font-size: 13.5px;
+  color: var(--muted);
+  margin-bottom: 18px;
+  font-weight: 500;
+}
+.reqs { display: flex; flex-wrap: wrap; gap: 8px; }
+.req {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(255,255,255,0.8);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid rgba(0,0,0,0.08);
+  color: var(--text);
+}
+.ck { color: var(--green); font-size: 13px; }
+.comp-examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.comp-ex {
+  padding: 6px 14px;
+  background: rgba(255,255,255,0.75);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text2);
+}
+.winner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 18px;
+  background: #FEF08A;
+  border: 1.5px solid #FCD34D;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #78350F;
+  margin-top: 8px;
+}
+.comp-body {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: end;
+}
+.fp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.fp-left h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-family: var(--mono);
+  margin-bottom: 12px;
+}
+.fp-apps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.fpa {
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.15s;
+}
+.fpa:hover { background: var(--surface); }
+.fpa .fa-icon { font-size: 18px; }
+
+.skills-list { display: flex; flex-direction: column; gap: 7px; }
+.sk-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  background: rgba(255,255,255,0.75);
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.06);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+}
+.sk-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; background: var(--green); }
+
+@media (max-width: 900px) {
+  .hero-inner, .detail-row, .sum-row, .fp-grid, .fp-apps { grid-template-columns: 1fr; }
+  .sgrid { grid-template-columns: 1fr; }
+  .goal-card { max-width: 100%; min-width: 0; }
+  .main, .hero, .outcomes-bar, .header { padding-left: 20px; padding-right: 20px; }
+  .comp-body { grid-template-columns: 1fr; }
+  .trail { padding: 20px 20px; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="index.html">
+      <span class="logo-icon">🚀</span>
+      Front-End <span>for kids</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <nav class="level-nav">
+        <a href="index.html">Level 1</a>
+        <a href="level2.html" class="l2">Level 2</a>
+        <a href="level3.html" class="l3 active">Level 3</a>
+      </nav>
+      <div class="level-badge"><div class="dot"></div>Level 3 of 3</div>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag">● Level 03 of 03</div>
+      <h1>JavaScript Basics<br><span>for Website Interaction</span></h1>
+      <p class="hero-meta">1 Month · 8 Sessions · 4 Weeks · Ages 10–16</p>
+      <div class="hero-chips">
+        <div class="hchip"><span class="ci">📅</span> 1 Month</div>
+        <div class="hchip"><span class="ci">🎓</span> 8 Sessions</div>
+        <div class="hchip"><span class="ci">🏆</span> 2 Competitions</div>
+        <div class="hchip"><span class="ci">🏗</span> 1 Mini Project</div>
+        <div class="hchip"><span class="ci">🚀</span> 1 Final Project</div>
+      </div>
+    </div>
+    <div class="goal-card" style="background:var(--purple-lt);border-color:#DDD6FE">
+      <div class="gc-label" style="color:var(--purple)">🎯 Level Goal</div>
+      <p style="color:#5B21B6">Students learn very simple JavaScript to make their websites <strong>interactive</strong>. الهدف مش إن الطالب يتعمق في JavaScript، لكن يعرف يشغّل الموقع بتاعه.</p>
+    </div>
+  </div>
+</section>
+
+<div class="outcomes-bar">
+  <div class="outcomes-bar-inner">
+    <div class="ob-label">After Level 3 — Students Can:</div>
+    <div class="ob-grid">
+      <div class="ob-item"><span class="ob-check">✔</span> Understand what JavaScript does in a website</div><div class="ob-item"><span class="ob-check">✔</span> Connect JavaScript with HTML</div><div class="ob-item"><span class="ob-check">✔</span> Make a button do an action</div><div class="ob-item"><span class="ob-check">✔</span> Show alert messages</div><div class="ob-item"><span class="ob-check">✔</span> Store a simple message in a variable</div><div class="ob-item"><span class="ob-check">✔</span> Change text on the page</div><div class="ob-item"><span class="ob-check">✔</span> Change colors on the page</div><div class="ob-item"><span class="ob-check">✔</span> Show and hide sections</div><div class="ob-item"><span class="ob-check">✔</span> Read input value</div><div class="ob-item"><span class="ob-check">✔</span> Make simple form validation</div><div class="ob-item"><span class="ob-check">✔</span> Add 3 simple interactions to their website</div>
+    </div>
+  </div>
+</div>
+
+<div class="trail">
+  <div class="trail-step"><div class="trail-circle" style="background:var(--purple-lt);border-color:var(--purple);color:var(--purple)">S1</div><div class="trail-label">Alert Button</div></div>
+  <div class="trail-arrow">→</div>
+  <div class="trail-step"><div class="trail-circle" style="background:var(--purple-lt);border-color:var(--purple);color:var(--purple)">S2</div><div class="trail-label">Variables &amp; Events</div></div>
+  <div class="trail-arrow">→</div>
+  <div class="trail-step"><div class="trail-circle" style="background:var(--purple-lt);border-color:var(--purple);color:var(--purple)">S3</div><div class="trail-label">Change Text</div></div>
+  <div class="trail-arrow">→</div>
+  <div class="trail-step"><div class="trail-circle" style="background:var(--purple-lt);border-color:var(--purple);color:var(--purple)">S4</div><div class="trail-label">Change Colors</div></div>
+  <div class="trail-arrow">→</div>
+  <div class="trail-step"><div class="trail-circle" style="background:#FCD34D44;border-color:var(--amber);color:#92400E">⚔</div><div class="trail-label">Comp 1</div></div>
+  <div class="trail-arrow">→</div>
+  <div class="trail-step"><div class="trail-circle" style="background:var(--purple-lt);border-color:var(--purple);color:var(--purple)">P1</div><div class="trail-label">Mini Project</div></div>
+  <div class="trail-arrow">→</div>
+  <div class="trail-step"><div class="trail-circle" style="background:var(--purple-lt);border-color:var(--purple);color:var(--purple)">S5</div><div class="trail-label">Show / Hide</div></div>
+  <div class="trail-arrow">→</div>
+  <div class="trail-step"><div class="trail-circle" style="background:var(--purple-lt);border-color:var(--purple);color:var(--purple)">S6</div><div class="trail-label">Input Message</div></div>
+  <div class="trail-arrow">→</div>
+  <div class="trail-step"><div class="trail-circle" style="background:var(--purple-lt);border-color:var(--purple);color:var(--purple)">S7</div><div class="trail-label">Validation</div></div>
+  <div class="trail-arrow">→</div>
+  <div class="trail-step"><div class="trail-circle" style="background:var(--purple-lt);border-color:var(--purple);color:var(--purple)">S8</div><div class="trail-label">Dark Mode + Final</div></div>
+  <div class="trail-arrow">→</div>
+  <div class="trail-step"><div class="trail-circle" style="background:#FCD34D44;border-color:var(--amber);color:#92400E">⚔</div><div class="trail-label">Comp 2</div></div>
+  <div class="trail-arrow">→</div>
+  <div class="trail-step"><div class="trail-circle" style="background:#DCFCE7;border-color:#22C55E;color:#166534">🏆</div><div class="trail-label">Final</div></div>
+</div>
+
+<main class="main">
+
+  <div class="week-hd">
+    <div class="wk-pill" style="background:var(--purple-lt);border-color:var(--purple);color:var(--purple)">W1</div>
+    <span class="wk-subtitle">First JavaScript Actions</span>
+    <div class="wk-line"></div>
+  </div>
+  <div class="sgrid">
+
+    <div class="scard">
+      <div class="scard-accent" style="background: linear-gradient(90deg, var(--purple), var(--indigo))"></div>
+      <div class="scard-head">
+        <div class="snum" style="background:var(--purple-lt);color:var(--purple)">S01</div>
+        <div>
+          <div class="stitle">Alert Button</div>
+          <div class="ssub">Make the Button Talk 🔔</div>
+        </div>
+      </div>
+      <div class="sbody">
+        <div class="section-label">Topics Covered</div>
+        <div class="ctags">
+          <span class="ctag">What is JavaScript?</span>
+          <span class="ctag">script tag</span>
+          <span class="ctag">onclick</span>
+          <span class="ctag">alert()</span>
+        </div>
+        <div class="detail-row">
+          <div class="tbox" style="background:var(--purple-lt);border-color:#DDD6FE">
+            <div class="blbl" style="color:var(--purple)">🎮 Mini Task</div>
+            <div class="tname">Order Button Alert</div>
+            <ul>
+              <li>زرار في الموقع يطلع رسالة.</li>
+              <li>Example: Order Now → Your order is being prepared!</li>
+            </ul>
+          </div>
+          <div class="hwbox">
+            <div class="blbl">🏠 Homework</div>
+            <div class="tname">Alert Button Challenge</div>
+            <ul style="list-style:none">
+              <li>ضيف زرار في موقعك يطلع رسالة مناسبة لفكرة الموقع.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scard">
+      <div class="scard-accent" style="background: linear-gradient(90deg, var(--purple), var(--indigo))"></div>
+      <div class="scard-head">
+        <div class="snum" style="background:var(--purple-lt);color:var(--purple)">S02</div>
+        <div>
+          <div class="stitle">Variables &amp; Events</div>
+          <div class="ssub">Store a Simple Message 🧠</div>
+        </div>
+      </div>
+      <div class="sbody">
+        <div class="section-label">Topics Covered</div>
+        <div class="ctags">
+          <span class="ctag">let</span>
+          <span class="ctag">Store text</span>
+          <span class="ctag">Button event</span>
+          <span class="ctag">Use variable in alert</span>
+        </div>
+        <div class="detail-row">
+          <div class="tbox" style="background:var(--purple-lt);border-color:#DDD6FE">
+            <div class="blbl" style="color:var(--purple)">🎮 Mini Task</div>
+            <div class="tname">Website Offer Message</div>
+            <ul>
+              <li>let offer = &quot;Today’s offer is 20% OFF&quot;;</li>
+              <li>زرار يعرض الرسالة في alert.</li>
+            </ul>
+          </div>
+          <div class="hwbox">
+            <div class="blbl">🏠 Homework</div>
+            <div class="tname">Website Message Challenge</div>
+            <ul style="list-style:none">
+              <li>اعمل variable فيها رسالة للموقع، وخلي زرار يعرضها.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="week-hd">
+    <div class="wk-pill" style="background:var(--purple-lt);border-color:var(--purple);color:var(--purple)">W2</div>
+    <span class="wk-subtitle">Change Website Content</span>
+    <div class="wk-line"></div>
+  </div>
+  <div class="sgrid">
+
+    <div class="scard">
+      <div class="scard-accent" style="background: linear-gradient(90deg, var(--purple), var(--indigo))"></div>
+      <div class="scard-head">
+        <div class="snum" style="background:var(--purple-lt);color:var(--purple)">S03</div>
+        <div>
+          <div class="stitle">Change Text</div>
+          <div class="ssub">Update the Page with a Click ✏️</div>
+        </div>
+      </div>
+      <div class="sbody">
+        <div class="section-label">Topics Covered</div>
+        <div class="ctags">
+          <span class="ctag">id</span>
+          <span class="ctag">document.getElementById()</span>
+          <span class="ctag">innerText</span>
+          <span class="ctag">Button changes text</span>
+        </div>
+        <div class="detail-row">
+          <div class="tbox" style="background:var(--purple-lt);border-color:#DDD6FE">
+            <div class="blbl" style="color:var(--purple)">🎮 Mini Task</div>
+            <div class="tname">Welcome Message Button</div>
+            <ul>
+              <li>زرار يغير جملة في الصفحة.</li>
+              <li>Before: Hello!</li>
+              <li>After: Welcome to my website!</li>
+            </ul>
+          </div>
+          <div class="hwbox">
+            <div class="blbl">🏠 Homework</div>
+            <div class="tname">Change Text Challenge</div>
+            <ul style="list-style:none">
+              <li>ضيف زرار يغير عنوان أو وصف في موقعك.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scard">
+      <div class="scard-accent" style="background: linear-gradient(90deg, var(--purple), var(--indigo))"></div>
+      <div class="scard-head">
+        <div class="snum" style="background:var(--purple-lt);color:var(--purple)">S04</div>
+        <div>
+          <div class="stitle">Change Colors</div>
+          <div class="ssub">Control Website Colors 🎨</div>
+        </div>
+      </div>
+      <div class="sbody">
+        <div class="section-label">Topics Covered</div>
+        <div class="ctags">
+          <span class="ctag">style</span>
+          <span class="ctag">backgroundColor</span>
+          <span class="ctag">color</span>
+          <span class="ctag">Button changes color</span>
+        </div>
+        <div class="detail-row">
+          <div class="tbox" style="background:var(--purple-lt);border-color:#DDD6FE">
+            <div class="blbl" style="color:var(--purple)">🎮 Mini Task</div>
+            <div class="tname">Change Color Button</div>
+            <ul>
+              <li>زرار يغير لون جزء من الموقع.</li>
+              <li>Example: Make it Blue / Make it Orange</li>
+            </ul>
+          </div>
+          <div class="hwbox">
+            <div class="blbl">🏠 Homework</div>
+            <div class="tname">Color Button Challenge</div>
+            <ul style="list-style:none">
+              <li>ضيف زرارين يغيروا ألوان مناسبة لفكرة موقعك.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="week-hd">
+    <div class="wk-pill" style="background:var(--purple-lt);border-color:var(--purple);color:var(--purple)">W3</div>
+    <span class="wk-subtitle">Show / Hide + User Input</span>
+    <div class="wk-line"></div>
+  </div>
+  <div class="sgrid">
+
+    <div class="scard">
+      <div class="scard-accent" style="background: linear-gradient(90deg, var(--purple), var(--indigo))"></div>
+      <div class="scard-head">
+        <div class="snum" style="background:var(--purple-lt);color:var(--purple)">S05</div>
+        <div>
+          <div class="stitle">Show / Hide Section</div>
+          <div class="ssub">Open and Close Website Parts 👀</div>
+        </div>
+      </div>
+      <div class="sbody">
+        <div class="section-label">Topics Covered</div>
+        <div class="ctags">
+          <span class="ctag">display</span>
+          <span class="ctag">none</span>
+          <span class="ctag">block</span>
+          <span class="ctag">Show / Hide with button</span>
+        </div>
+        <div class="detail-row">
+          <div class="tbox" style="background:var(--purple-lt);border-color:#DDD6FE">
+            <div class="blbl" style="color:var(--purple)">🎮 Mini Task</div>
+            <div class="tname">Show Menu Button</div>
+            <ul>
+              <li>في موقع مطعم: Show Menu / Hide Menu</li>
+              <li>أو في أي موقع: Show Details / Hide Details</li>
+            </ul>
+          </div>
+          <div class="hwbox">
+            <div class="blbl">🏠 Homework</div>
+            <div class="tname">Show / Hide Challenge</div>
+            <ul style="list-style:none">
+              <li>ضيف Show / Hide Feature لموقعك.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scard">
+      <div class="scard-accent" style="background: linear-gradient(90deg, var(--purple), var(--indigo))"></div>
+      <div class="scard-head">
+        <div class="snum" style="background:var(--purple-lt);color:var(--purple)">S06</div>
+        <div>
+          <div class="stitle">Input Message</div>
+          <div class="ssub">Say Hello to the User ⌨️</div>
+        </div>
+      </div>
+      <div class="sbody">
+        <div class="section-label">Topics Covered</div>
+        <div class="ctags">
+          <span class="ctag">input</span>
+          <span class="ctag">value</span>
+          <span class="ctag">Read user name</span>
+          <span class="ctag">Show greeting message</span>
+        </div>
+        <div class="detail-row">
+          <div class="tbox" style="background:var(--purple-lt);border-color:#DDD6FE">
+            <div class="blbl" style="color:var(--purple)">🎮 Mini Task</div>
+            <div class="tname">Name Greeting</div>
+            <ul>
+              <li>المستخدم يكتب اسمه: Ahmed</li>
+              <li>الموقع يعرض: Welcome, Ahmed</li>
+            </ul>
+          </div>
+          <div class="hwbox">
+            <div class="blbl">🏠 Homework</div>
+            <div class="tname">Greeting Input Challenge</div>
+            <ul style="list-style:none">
+              <li>ضيف input يخلي الموقع يرحب باسم المستخدم.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="week-hd">
+    <div class="wk-pill" style="background:var(--purple-lt);border-color:var(--purple);color:var(--purple)">W4</div>
+    <span class="wk-subtitle">Simple Form + Final Website</span>
+    <div class="wk-line"></div>
+  </div>
+  <div class="sgrid">
+
+    <div class="scard">
+      <div class="scard-accent" style="background: linear-gradient(90deg, var(--purple), var(--indigo))"></div>
+      <div class="scard-head">
+        <div class="snum" style="background:var(--purple-lt);color:var(--purple)">S07</div>
+        <div>
+          <div class="stitle">Simple Form Validation</div>
+          <div class="ssub">Check Before Sending ✅</div>
+        </div>
+      </div>
+      <div class="sbody">
+        <div class="section-label">Topics Covered</div>
+        <div class="ctags">
+          <span class="ctag">Input value</span>
+          <span class="ctag">Empty input</span>
+          <span class="ctag">if</span>
+          <span class="ctag">else</span>
+        </div>
+        <div class="detail-row">
+          <div class="tbox" style="background:var(--purple-lt);border-color:#DDD6FE">
+            <div class="blbl" style="color:var(--purple)">🎮 Mini Task</div>
+            <div class="tname">Simple Contact Form Validation</div>
+            <ul>
+              <li>لو الاسم فاضي: Please enter your name</li>
+              <li>لو الاسم مكتوب: Thank you, your message has been sent</li>
+            </ul>
+          </div>
+          <div class="hwbox">
+            <div class="blbl">🏠 Homework</div>
+            <div class="tname">Validation Challenge</div>
+            <ul style="list-style:none">
+              <li>ضيف validation بسيط للفورم في موقعك.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scard">
+      <div class="scard-accent" style="background: linear-gradient(90deg, var(--purple), var(--indigo))"></div>
+      <div class="scard-head">
+        <div class="snum" style="background:var(--purple-lt);color:var(--purple)">S08</div>
+        <div>
+          <div class="stitle">Dark Mode + Final Project Workshop</div>
+          <div class="ssub">Finish Your Interactive Website 🌙🏗️</div>
+        </div>
+      </div>
+      <div class="sbody">
+        <div class="section-label">Topics Covered</div>
+        <div class="ctags">
+          <span class="ctag">Dark Mode idea</span>
+          <span class="ctag">classList.toggle()</span>
+          <span class="ctag">Review JS features</span>
+          <span class="ctag">Final project preparation</span>
+        </div>
+        <div class="detail-row">
+          <div class="tbox" style="background:var(--purple-lt);border-color:#DDD6FE">
+            <div class="blbl" style="color:var(--purple)">🎮 Mini Task</div>
+            <div class="tname">Dark Mode Button</div>
+            <ul>
+              <li>زرار يحول الموقع من Light Mode إلى Dark Mode.</li>
+            </ul>
+          </div>
+          <div class="hwbox">
+            <div class="blbl">🏠 Homework</div>
+            <div class="tname">Final Submission</div>
+            <ul style="list-style:none">
+              <li>جهز الموقع النهائي وأضاف 3 JavaScript features فقط.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="special comp-card">
+    <div class="sp-badge" style="color:#92400E;background:#FEF3C7;border-color:#FCD34D">⚔️ Competition 1 — Button Actions Challenge</div>
+    <div class="comp-body">
+      <div>
+        <h3>JavaScript Button Champion 🏆</h3>
+        <p class="sp-desc">Students add simple button actions to their websites.</p>
+        <div class="reqs">
+          <div class="req"><span class="ck">✔</span> Alert Button</div>
+          <div class="req"><span class="ck">✔</span> Variable Message</div>
+          <div class="req"><span class="ck">✔</span> Change Text</div>
+          <div class="req"><span class="ck">✔</span> Change Color</div>
+        </div>
+      </div>
+      <div><div class="winner-badge">🥇 Winner: JavaScript Button Champion</div></div>
+    </div>
+  </div>
+
+  <div class="special mini-proj-card">
+    <div class="sp-badge" style="color:var(--purple);background:var(--purple-lt);border-color:#DDD6FE">🏗 Mini Project</div>
+    <h3>Interactive Hero Section</h3>
+    <p class="sp-desc">Students upgrade the Hero Section from their website.</p>
+    <div class="reqs">
+      <div class="req"><span class="ck">✔</span> Button shows alert</div>
+      <div class="req"><span class="ck">✔</span> Button changes text</div>
+      <div class="req"><span class="ck">✔</span> Button changes color</div>
+      <div class="req"><span class="ck">✔</span> Simple clean design</div>
+    </div>
+  </div>
+
+  <div class="special comp-card">
+    <div class="sp-badge" style="color:#92400E;background:#FEF3C7;border-color:#FCD34D">⚔️ Competition 2 — Interactive Website Challenge</div>
+    <h3>Interactive Website Champion 🏆</h3>
+    <p class="sp-desc">Students compete for the most useful and creative interactive website.</p>
+    <div class="reqs">
+      <div class="req"><span class="ck">✔</span> Complete Website Layout</div>
+      <div class="req"><span class="ck">✔</span> Clean CSS Design</div>
+      <div class="req"><span class="ck">✔</span> 3 JavaScript Features فقط</div>
+      <div class="req"><span class="ck">✔</span> Working Buttons</div>
+      <div class="req"><span class="ck">✔</span> Clear Messages</div>
+      <div class="req"><span class="ck">✔</span> Good Presentation</div>
+    </div>
+  </div>
+
+  <div class="special final-proj-card" style="padding:32px 36px">
+    <div class="sp-badge" style="color:#166534;background:#DCFCE7;border-color:#86EFAC">🏆 Final Level 3 Project</div>
+    <h3 style="font-size:26px;margin-bottom:6px">Interactive Real Website</h3>
+    <p class="sp-desc">Students upgrade their Level 2 website using simple JavaScript.</p>
+    <div class="fp-grid">
+      <div class="fp-left">
+        <h4>Must Include</h4>
+        <div class="skills-list">
+          <div class="sk-row"><div class="sk-dot"></div>Navbar</div><div class="sk-row"><div class="sk-dot"></div>Hero Section</div><div class="sk-row"><div class="sk-dot"></div>Cards Section</div><div class="sk-row"><div class="sk-dot"></div>Form</div><div class="sk-row"><div class="sk-dot"></div>Footer</div><div class="sk-row"><div class="sk-dot"></div>Responsive Part</div><div class="sk-row"><div class="sk-dot"></div>Clean CSS</div><div class="sk-row"><div class="sk-dot"></div>3 JavaScript Features</div>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;font-family:var(--mono);margin-bottom:12px">JavaScript Features Options</h4>
+        <div class="skills-list">
+          <div class="sk-row"><div class="sk-dot" style="background:var(--purple)"></div>Alert Button</div><div class="sk-row"><div class="sk-dot" style="background:var(--purple)"></div>Variable Message</div><div class="sk-row"><div class="sk-dot" style="background:var(--purple)"></div>Change Text</div><div class="sk-row"><div class="sk-dot" style="background:var(--purple)"></div>Change Color</div><div class="sk-row"><div class="sk-dot" style="background:var(--purple)"></div>Show / Hide Section</div><div class="sk-row"><div class="sk-dot" style="background:var(--purple)"></div>Greeting Input</div><div class="sk-row"><div class="sk-dot" style="background:var(--purple)"></div>Simple Form Validation</div><div class="sk-row"><div class="sk-dot" style="background:var(--purple)"></div>Dark Mode</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:24px">
+      <h4 style="font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;font-family:var(--mono);margin-bottom:12px">Choose Your Website</h4>
+      <div class="fp-apps">
+        <div class="fpa"><span class="fa-icon">🍔</span><div><div style="font-size:15px;font-weight:800;color:var(--text)">Interactive Restaurant Website</div><div style="font-size:12px;color:var(--muted);font-weight:500;margin-top:3px">Order Alert · Show/Hide Menu · Booking Validation · Dark Mode</div></div></div><div class="fpa"><span class="fa-icon">🏫</span><div><div style="font-size:15px;font-weight:800;color:var(--text)">Interactive School Website</div><div style="font-size:12px;color:var(--muted);font-weight:500;margin-top:3px">Join Alert · Change Welcome Text · Activities · Contact Validation</div></div></div><div class="fpa"><span class="fa-icon">🛍</span><div><div style="font-size:15px;font-weight:800;color:var(--text)">Interactive Product Website</div><div style="font-size:12px;color:var(--muted);font-weight:500;margin-top:3px">Buy Alert · Product Details · Theme Color</div></div></div><div class="fpa"><span class="fa-icon">👤</span><div><div style="font-size:15px;font-weight:800;color:var(--text)">Interactive Portfolio Website</div><div style="font-size:12px;color:var(--muted);font-weight:500;margin-top:3px">Welcome Button · About Text · Skills · Contact Validation</div></div></div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>
